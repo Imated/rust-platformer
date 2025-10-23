@@ -1,4 +1,6 @@
-﻿use glam::Vec2;
+﻿#![allow(unused_parens)]
+#![allow(dead_code)]
+use glam::Vec2;
 
 pub struct Transform {
     pub position: Vec2,

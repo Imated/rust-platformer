@@ -1,5 +1,5 @@
-use macroquad::prelude::get_frame_time;
-use macroquad::window::next_frame;
+use macroquad::miniquad::window::order_quit;
+use macroquad::prelude::*;
 use crate::app::{App, Game};
 
 mod app;
@@ -11,7 +11,14 @@ mod constants;
 async fn main() {
     let mut app = Game::new();
     loop {
+        //update
         app.update(get_frame_time());
+
+        if is_key_down(KeyCode::Escape) {
+            order_quit();
+        }
+
+        //render
         app.render();
         next_frame().await;
     }

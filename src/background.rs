@@ -5,7 +5,6 @@ use crate::entity::{Transform, Renderable, Updatable};
 
 pub struct Background {
     transform: Transform,
-    slide_timer: f32,
     speed: f32
 }
 
@@ -13,7 +12,6 @@ impl Background {
     pub fn new() -> Self {
         Self {
             transform: Transform::new(),
-            slide_timer: 0f32,
             speed: 25.0,
         }
     }
@@ -27,7 +25,7 @@ impl Updatable for Background {
     fn update(&mut self, delta_time: f32) {
         self.transform.add_position_x(self.speed * delta_time);
         let period = BACKGROUND_STRIPE_OFFSET * 2.0;
-        if (self.transform.position.x >= period) {
+        if self.transform.position.x >= period {
             self.transform.set_position_x(0.0);
         }
     }
