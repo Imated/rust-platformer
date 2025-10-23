@@ -1,5 +1,6 @@
 ﻿use crate::background::Background;
 use crate::entity::{Entity};
+use crate::player::Player;
 
 pub trait App {
     fn new() -> Self;
@@ -14,18 +15,18 @@ pub struct Game {
 impl App for Game {
     fn new() -> Self {
         Self {
-            entities: vec![Box::new(Background::new())]
+            entities: vec![Box::new(Background::new()), Box::new(Player::new())]
         }
     }
 
     fn update(&mut self, delta_time: f32) {
-        for mut entity in &mut self.entities {
+        for entity in &mut self.entities {
             entity.update(delta_time);
         }
     }
 
     fn render(&self) {
-        for mut entity in &self.entities {
+        for entity in &self.entities {
             entity.render();
         }
     }

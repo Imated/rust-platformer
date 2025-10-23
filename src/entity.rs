@@ -52,6 +52,9 @@ impl Transform {
     pub fn add_rotation(&mut self, rotation: f32) {
         self.rotation += rotation;
     }
+    pub fn add_position(&mut self, position: Vec2) {
+        self.position += position;
+    }
 }
 
 pub trait Entity {
