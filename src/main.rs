@@ -5,6 +5,7 @@ use crate::app::{App, Game};
 mod app;
 mod background;
 mod entity;
+mod constants;
 
 #[macroquad::main("Game")]
 async fn main() {
