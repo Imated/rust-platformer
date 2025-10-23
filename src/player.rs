@@ -1,8 +1,8 @@
-﻿use glam::f32::{Vec2, Vec3};
+﻿use glam::f32::{Vec2};
 use macroquad::input::{is_key_down, KeyCode};
-use macroquad::math::vec3;
-use macroquad::prelude::{draw_cube, Color};
+use macroquad::prelude::{Color};
 use macroquad::shapes::draw_rectangle;
+use crate::collider::{Collider, Object};
 use crate::constants::{GRAVITY, PLAYER_COLOR};
 use crate::entity::{Entity, Transform};
 
@@ -11,17 +11,17 @@ pub struct Player {
     velocity: Vec2,
     move_speed: f32,
     jump_height: f32,
-    grounded: bool
+    grounded: bool,
 }
 
 impl Player {
     pub fn new() -> Self {
         Self {
-            transform: Transform::new(),
+            transform: Transform::new(Vec2::new(50.0, 50.0)),
             velocity: Vec2::ZERO,
             move_speed: 250.0,
             jump_height: 260.0,
-            grounded: true
+            grounded: true,
         }
     }
 
@@ -34,14 +34,14 @@ impl Player {
 
     fn update_movement(&mut self, input: i32, delta_time: f32) {
         self.velocity.x = input as f32 * self.move_speed;
-        self.velocity.y -= GRAVITY * delta_time;
+        if !self.grounded {
+            self.velocity.y -= GRAVITY * delta_time;
+        }
 
         self.transform.add_position(self.velocity * delta_time);
 
-        if self.transform.position.y > 400.0 {
-            self.transform.position.y = 400.0;
+        if self.grounded {
             self.velocity.y = 0.0;
-            self.grounded = true;
         }
     }
 }
@@ -56,6 +56,21 @@ impl Entity for Player {
     }
 
     fn render(&self) {
-        draw_rectangle(self.transform.position.x, self.transform.position.y, self.transform.scale.x * 50.0, self.transform.scale.y * 50.0, Color::from_hex(PLAYER_COLOR));
+        draw_rectangle(self.transform.position.x, self.transform.position.y, self.transform.size.x, self.transform.size.y, Color::from_hex(PLAYER_COLOR));
     }
+
+    fn update_collision(&mut self, collidables: &Vec<Object>) {
+        for collider in collidables {
+            if self.collides(&self.transform, &collider.transform) {
+                self.grounded = true;
+            }
+            else {
+                self.grounded = false;
+            }
+        }
+    }
+}
+
+impl Collider for Player {
+    
 }

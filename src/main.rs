@@ -7,6 +7,7 @@ mod background;
 mod entity;
 mod constants;
 mod player;
+mod collider;
 
 #[macroquad::main("Game")]
 async fn main() {

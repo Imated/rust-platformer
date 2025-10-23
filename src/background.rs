@@ -1,5 +1,7 @@
-﻿use macroquad::math::i32;
-use macroquad::prelude::*;
+﻿use glam::Vec2;
+use macroquad::math::vec3;
+use macroquad::prelude::{draw_affine_parallelogram, screen_height, screen_width, Color};
+use crate::collider::{Collider, Object};
 use crate::constants::*;
 use crate::entity::{Transform, Entity};
 
@@ -11,7 +13,7 @@ pub struct Background {
 impl Background {
     pub fn new() -> Self {
         Self {
-            transform: Transform::new(),
+            transform: Transform::new(Vec2::new(screen_width(), screen_height())),
             speed: 25.0,
         }
     }
@@ -42,5 +44,9 @@ impl Entity for Background {
             let x_pos = (i as f32) * BACKGROUND_STRIPE_OFFSET + self.transform.position.x;
             self.draw_stripe(x_pos, -BACKGROUND_STRIPE_OFFSET, BACKGROUND_STRIPE_OFFSET, color);
         }
+    }
+
+    fn update_collision(&mut self, collidables: &Vec<Object>) {
+        // doesnt move + has no collisions
     }
 }
