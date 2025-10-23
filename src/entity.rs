@@ -54,10 +54,7 @@ impl Transform {
     }
 }
 
-pub trait Updatable {
+pub trait Entity {
     fn update(&mut self, delta_time: f32);
-}
-
-pub trait Renderable {
     fn render(&self);
 }

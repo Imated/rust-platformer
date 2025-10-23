@@ -1,7 +1,7 @@
 ﻿use macroquad::math::i32;
 use macroquad::prelude::*;
 use crate::constants::*;
-use crate::entity::{Transform, Renderable, Updatable};
+use crate::entity::{Transform, Entity};
 
 pub struct Background {
     transform: Transform,
@@ -21,7 +21,7 @@ impl Background {
     }
 }
 
-impl Updatable for Background {
+impl Entity for Background {
     fn update(&mut self, delta_time: f32) {
         self.transform.add_position_x(self.speed * delta_time);
         let period = BACKGROUND_STRIPE_OFFSET * 2.0;
@@ -29,9 +29,7 @@ impl Updatable for Background {
             self.transform.set_position_x(0.0);
         }
     }
-}
 
-impl Renderable for Background {
     fn render(&self) {
         let start_offset = -2;
         let num_stripes: i32 = ((screen_width() / BACKGROUND_STRIPE_OFFSET).ceil() as i32) + 1;
