@@ -1,3 +1,3 @@
 ﻿pub const BACKGROUND_LIGHT: u32 = 0x3e5a70;
 pub const BACKGROUND_DARK: u32 = 0x344c5e;
-pub const BACKGROUND_STRIPE_OFFSET: i8 = 85;
+pub const BACKGROUND_STRIPE_OFFSET: f32 = 85.0;
